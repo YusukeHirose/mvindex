@@ -1,8 +1,8 @@
 FROM golang:1.14-alpine
 
-COPY ./ /go
+COPY ./ /var/app
 
-WORKDIR /go
+WORKDIR /var/app
 
 ENV GO111MODULE="on"
 
