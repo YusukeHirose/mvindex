@@ -15,5 +15,5 @@ func main() {
 	g.GET("", handler.GetMovies)
 
 	// サーバー起動
-	e.Start(":8080")
+	e.Start("localhost:8080")
 }
