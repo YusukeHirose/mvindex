@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"log"
-	"mvindex/model"
+	"mvindex/model/tmdb"
 	"net/http"
 
 	"github.com/kelseyhightower/envconfig"
@@ -13,7 +13,7 @@ import (
 const baseURL = "https://api.themoviedb.org/3"
 
 func getApiKey() string {
-	var conf model.ApiConfig
+	var conf tmdb.ApiConfig
 	err := envconfig.Process("", &conf)
 	if err != nil {
 		log.Fatal(err.Error())
@@ -21,7 +21,7 @@ func getApiKey() string {
 	return conf.Key
 }
 
-func GetTopRatedList(page string) []model.TopRatedContents {
+func GetTopRatedList(page string) []tmdb.TopRatedContents {
 	url := baseURL + "/movie/top_rated"
 	req, _ := http.NewRequest("GET", url, nil)
 	q := req.URL.Query()
@@ -35,7 +35,7 @@ func GetTopRatedList(page string) []model.TopRatedContents {
 	}
 	defer res.Body.Close()
 	body, err := ioutil.ReadAll(res.Body)
-	t := model.TopRatedBase{}
+	t := tmdb.TopRatedBase{}
 	err = json.Unmarshal(body, &t)
 	if err != nil {
 		log.Fatal(err)
