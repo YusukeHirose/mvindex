@@ -13,16 +13,20 @@ import (
 
 const baseURL = "https://api.themoviedb.org/3"
 
-func GetTopRatedList() {
+func getApiKey() string {
 	var conf model.ApiConfig
 	err := envconfig.Process("", &conf)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
+	return conf.Key
+}
+
+func GetTopRatedList() {
 	url := baseURL + "/movie/top_rated"
 	req, _ := http.NewRequest("GET", url, nil)
 	q := req.URL.Query()
-	q.Add("api_key", conf.Key)
+	q.Add("api_key", getApiKey())
 	req.URL.RawQuery = q.Encode()
 	client := new(http.Client)
 	res, err := client.Do(req)
