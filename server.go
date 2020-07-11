@@ -13,6 +13,7 @@ func main() {
 
 	g := e.Group("/movies")
 	g.GET("", handler.GetMovies)
+	g.GET("/:id", handler.GetMovieDetail)
 
 	// サーバー起動
 	e.Start("0.0.0.0:8080")

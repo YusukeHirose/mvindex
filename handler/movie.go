@@ -12,3 +12,9 @@ func GetMovies(c echo.Context) error {
 	result := service.GetTopRatedList(page)
 	return c.JSON(http.StatusOK, result)
 }
+
+func GetMovieDetail(c echo.Context) error {
+	id := c.Param("id")
+	result := service.GetDetail(id)
+	return c.JSON(http.StatusOK, result)
+}
