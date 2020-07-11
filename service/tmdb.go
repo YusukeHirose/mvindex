@@ -31,11 +31,11 @@ func GetTopRatedList() {
 	}
 	defer res.Body.Close()
 	body, err := ioutil.ReadAll(res.Body)
-	m := model.Movie{}
-	err = json.Unmarshal(body, &m)
+	t := model.TopRatedBase{}
+	err = json.Unmarshal(body, &t)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(m)
+	fmt.Println(t)
 
 }
