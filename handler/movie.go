@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"mvindex/service"
 	"net/http"
 
@@ -9,7 +8,7 @@ import (
 )
 
 func GetMovies(c echo.Context) error {
-	fmt.Println("get movies")
-	result := service.GetTopRatedList()
+	page := c.QueryParam("page")
+	result := service.GetTopRatedList(page)
 	return c.JSON(http.StatusOK, result)
 }

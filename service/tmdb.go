@@ -21,11 +21,12 @@ func getApiKey() string {
 	return conf.Key
 }
 
-func GetTopRatedList() []model.TopRatedContents {
+func GetTopRatedList(page string) []model.TopRatedContents {
 	url := baseURL + "/movie/top_rated"
 	req, _ := http.NewRequest("GET", url, nil)
 	q := req.URL.Query()
 	q.Add("api_key", getApiKey())
+	q.Add("page", page)
 	req.URL.RawQuery = q.Encode()
 	client := new(http.Client)
 	res, err := client.Do(req)
