@@ -1,6 +1,7 @@
 package service
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -29,7 +30,12 @@ func GetTopRatedList() {
 		log.Fatal(err)
 	}
 	defer res.Body.Close()
-	byteArray, _ := ioutil.ReadAll(res.Body)
-	fmt.Println(string(byteArray))
+	body, err := ioutil.ReadAll(res.Body)
+	m := model.Movie{}
+	err = json.Unmarshal(body, &m)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(m)
 
 }
