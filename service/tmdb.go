@@ -2,7 +2,6 @@ package service
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"mvindex/model"
@@ -22,7 +21,7 @@ func getApiKey() string {
 	return conf.Key
 }
 
-func GetTopRatedList() {
+func GetTopRatedList() []model.TopRatedContents {
 	url := baseURL + "/movie/top_rated"
 	req, _ := http.NewRequest("GET", url, nil)
 	q := req.URL.Query()
@@ -40,6 +39,6 @@ func GetTopRatedList() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(t)
-
+	result := t.Rusults
+	return result
 }
