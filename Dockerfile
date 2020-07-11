@@ -1,10 +1,10 @@
 FROM golang:1.14-alpine
 
-COPY ./ /var/app
-
-WORKDIR /var/app
+EXPOSE 8080
 
 ENV GO111MODULE="on"
+
+WORKDIR /var/app/movie
 
 RUN apk add --no-cache \
         alpine-sdk \
