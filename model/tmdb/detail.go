@@ -10,7 +10,7 @@ type MovieDetail struct {
 	HomePage         string  `json:"home_page"`
 	Genres           []Genre `json:"genres"`
 	Overview         string  `json:"overview"`
-	VoteAverage      int64   `json:"vote_average"`
+	VoteAverage      float32 `json:"vote_average"`
 	VoteCount        int64   `json:"vote_count"`
 }
 

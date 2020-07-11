@@ -43,3 +43,24 @@ func GetTopRatedList(page string) []tmdb.TopRatedContents {
 	result := t.Rusults
 	return result
 }
+
+func GetDetail(id string) tmdb.MovieDetail {
+	url := baseURL + "/movie/" + id
+	req, _ := http.NewRequest("GET", url, nil)
+	q := req.URL.Query()
+	q.Add("api_key", getApiKey())
+	req.URL.RawQuery = q.Encode()
+	client := new(http.Client)
+	res, err := client.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer res.Body.Close()
+	body, err := ioutil.ReadAll(res.Body)
+	detail := tmdb.MovieDetail{}
+	err = json.Unmarshal(body, &detail)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return detail
+}
