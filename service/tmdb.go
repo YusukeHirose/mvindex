@@ -23,7 +23,6 @@ func GetTopRatedList() {
 	q := req.URL.Query()
 	q.Add("api_key", conf.Key)
 	req.URL.RawQuery = q.Encode()
-	fmt.Println("req url is ", req.URL)
 	client := new(http.Client)
 	res, err := client.Do(req)
 	if err != nil {
