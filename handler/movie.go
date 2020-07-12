@@ -16,5 +16,11 @@ func GetMovies(c echo.Context) error {
 func GetMovieDetail(c echo.Context) error {
 	id := c.Param("id")
 	result := service.GetDetail(id)
-	return c.JSON(http.StatusOK, result)
+	return c.
+		JSON(http.StatusOK, result)
+}
+
+func GetMovieByKeyword(c echo.Context) error {
+	kw := c.QueryParam("keyword")
+	return c.JSON(http.StatusOK, kw)
 }
