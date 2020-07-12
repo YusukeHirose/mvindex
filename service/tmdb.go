@@ -21,7 +21,7 @@ func getApiKey() string {
 	return conf.Key
 }
 
-func GetTopRatedList(page string) []tmdb.TopRatedContents {
+func GetTopRatedList(page string) []tmdb.BaseContents {
 	url := baseURL + "/movie/top_rated"
 	req, _ := http.NewRequest("GET", url, nil)
 	q := req.URL.Query()
@@ -35,7 +35,7 @@ func GetTopRatedList(page string) []tmdb.TopRatedContents {
 	}
 	defer res.Body.Close()
 	body, err := ioutil.ReadAll(res.Body)
-	t := tmdb.TopRatedBase{}
+	t := tmdb.Base{}
 	err = json.Unmarshal(body, &t)
 	if err != nil {
 		log.Fatal(err)
@@ -65,7 +65,7 @@ func GetDetail(id string) tmdb.MovieDetail {
 	return detail
 }
 
-func SearchByKeyword(keyword string) []tmdb.TopRatedContents {
+func SearchByKeyword(keyword string) []tmdb.BaseContents {
 	url := baseURL + "/search/movie"
 	req, _ := http.NewRequest("GET", url, nil)
 	q := req.URL.Query()
@@ -79,7 +79,7 @@ func SearchByKeyword(keyword string) []tmdb.TopRatedContents {
 	}
 	defer res.Body.Close()
 	body, err := ioutil.ReadAll(res.Body)
-	contents := tmdb.TopRatedBase{}
+	contents := tmdb.Base{}
 	err = json.Unmarshal(body, &contents)
 	return contents.Rusults
 }
