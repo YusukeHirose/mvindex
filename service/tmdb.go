@@ -28,15 +28,9 @@ func GetTopRatedList(page string) []tmdb.BaseContents {
 	q.Add("api_key", getApiKey())
 	q.Add("page", page)
 	req.URL.RawQuery = q.Encode()
-	client := new(http.Client)
-	res, err := client.Do(req)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer res.Body.Close()
-	body, err := ioutil.ReadAll(res.Body)
+	resBody := ExecuteRequest(req)
 	t := tmdb.Base{}
-	err = json.Unmarshal(body, &t)
+	err := json.Unmarshal(resBody, &t)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -50,15 +44,9 @@ func GetDetail(id string) tmdb.MovieDetail {
 	q := req.URL.Query()
 	q.Add("api_key", getApiKey())
 	req.URL.RawQuery = q.Encode()
-	client := new(http.Client)
-	res, err := client.Do(req)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer res.Body.Close()
-	body, err := ioutil.ReadAll(res.Body)
+	resBody := ExecuteRequest(req)
 	detail := tmdb.MovieDetail{}
-	err = json.Unmarshal(body, &detail)
+	err := json.Unmarshal(resBody, &detail)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -72,6 +60,16 @@ func SearchByKeyword(keyword string) []tmdb.BaseContents {
 	q.Add("api_key", getApiKey())
 	q.Add("query", keyword)
 	req.URL.RawQuery = q.Encode()
+	resBody := ExecuteRequest(req)
+	contents := tmdb.Base{}
+	err := json.Unmarshal(resBody, &contents)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return contents.Rusults
+}
+
+func ExecuteRequest(req *http.Request) []byte {
 	client := new(http.Client)
 	res, err := client.Do(req)
 	if err != nil {
@@ -79,7 +77,5 @@ func SearchByKeyword(keyword string) []tmdb.BaseContents {
 	}
 	defer res.Body.Close()
 	body, err := ioutil.ReadAll(res.Body)
-	contents := tmdb.Base{}
-	err = json.Unmarshal(body, &contents)
-	return contents.Rusults
+	return body
 }
