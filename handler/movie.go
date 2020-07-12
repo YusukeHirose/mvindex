@@ -22,5 +22,6 @@ func GetMovieDetail(c echo.Context) error {
 
 func GetMovieByKeyword(c echo.Context) error {
 	kw := c.QueryParam("keyword")
-	return c.JSON(http.StatusOK, kw)
+	result := service.SearchByKeyword(kw)
+	return c.JSON(http.StatusOK, result)
 }

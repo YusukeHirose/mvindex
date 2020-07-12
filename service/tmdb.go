@@ -64,3 +64,22 @@ func GetDetail(id string) tmdb.MovieDetail {
 	}
 	return detail
 }
+
+func SearchByKeyword(keyword string) []tmdb.TopRatedContents {
+	url := baseURL + "/search/movie"
+	req, _ := http.NewRequest("GET", url, nil)
+	q := req.URL.Query()
+	q.Add("api_key", getApiKey())
+	q.Add("query", keyword)
+	req.URL.RawQuery = q.Encode()
+	client := new(http.Client)
+	res, err := client.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer res.Body.Close()
+	body, err := ioutil.ReadAll(res.Body)
+	contents := tmdb.TopRatedBase{}
+	err = json.Unmarshal(body, &contents)
+	return contents.Rusults
+}
