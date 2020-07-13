@@ -11,6 +11,7 @@ import (
 )
 
 const baseURL = "https://api.themoviedb.org/3"
+const imageURL = "https://image.tmdb.org/t/p/w500"
 
 func getApiKey() string {
 	var conf tmdb.ApiConfig
@@ -34,6 +35,9 @@ func GetTopRatedList(page string) []tmdb.BaseContents {
 	if err != nil {
 		log.Fatal(err)
 	}
+	for i, r := range t.Rusults {
+		t.Rusults[i].PosterPath = imageURL + r.PosterPath
+	}
 	result := t.Rusults
 	return result
 }
@@ -50,6 +54,7 @@ func GetDetail(id string) tmdb.MovieDetail {
 	if err != nil {
 		log.Fatal(err)
 	}
+	detail.PosterPath = imageURL + detail.PosterPath
 	return detail
 }
 
@@ -65,6 +70,9 @@ func SearchByKeyword(keyword string) []tmdb.BaseContents {
 	err := json.Unmarshal(resBody, &contents)
 	if err != nil {
 		log.Fatal(err)
+	}
+	for i, c := range contents.Rusults {
+		contents.Rusults[i].PosterPath = imageURL + c.PosterPath
 	}
 	return contents.Rusults
 }
