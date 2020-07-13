@@ -71,6 +71,9 @@ func SearchByKeyword(keyword string) []tmdb.BaseContents {
 	if err != nil {
 		log.Fatal(err)
 	}
+	for i, c := range contents.Rusults {
+		contents.Rusults[i].PosterPath = imageURL + c.PosterPath
+	}
 	return contents.Rusults
 }
 
