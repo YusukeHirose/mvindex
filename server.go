@@ -10,6 +10,7 @@ import (
 func main() {
 	e := echo.New()
 	e.Use(middleware.Logger())
+	e.Use(middleware.CORS())
 
 	g := e.Group("/movies")
 	g.GET("", handler.GetMovies)
