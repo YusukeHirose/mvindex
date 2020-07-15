@@ -22,7 +22,7 @@ func getApiKey() string {
 	return conf.Key
 }
 
-func GetTopRatedList(page string) []tmdb.BaseContents {
+func GetTopRatedList(page string) tmdb.Base {
 	url := baseURL + "/movie/top_rated"
 	req, _ := http.NewRequest("GET", url, nil)
 	q := req.URL.Query()
@@ -38,8 +38,7 @@ func GetTopRatedList(page string) []tmdb.BaseContents {
 	for i, r := range t.Rusults {
 		t.Rusults[i].PosterPath = imageURL + r.PosterPath
 	}
-	result := t.Rusults
-	return result
+	return t
 }
 
 func GetDetail(id string) tmdb.MovieDetail {
@@ -58,12 +57,13 @@ func GetDetail(id string) tmdb.MovieDetail {
 	return detail
 }
 
-func SearchByKeyword(keyword string) []tmdb.BaseContents {
+func SearchByKeyword(keyword string, page string) tmdb.Base {
 	url := baseURL + "/search/movie"
 	req, _ := http.NewRequest("GET", url, nil)
 	q := req.URL.Query()
 	q.Add("api_key", getApiKey())
 	q.Add("query", keyword)
+	q.Add("page", page)
 	req.URL.RawQuery = q.Encode()
 	resBody := ExecuteRequest(req)
 	contents := tmdb.Base{}
@@ -74,7 +74,7 @@ func SearchByKeyword(keyword string) []tmdb.BaseContents {
 	for i, c := range contents.Rusults {
 		contents.Rusults[i].PosterPath = imageURL + c.PosterPath
 	}
-	return contents.Rusults
+	return contents
 }
 
 func ExecuteRequest(req *http.Request) []byte {
