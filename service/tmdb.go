@@ -58,12 +58,13 @@ func GetDetail(id string) tmdb.MovieDetail {
 	return detail
 }
 
-func SearchByKeyword(keyword string) []tmdb.BaseContents {
+func SearchByKeyword(keyword string, page string) []tmdb.BaseContents {
 	url := baseURL + "/search/movie"
 	req, _ := http.NewRequest("GET", url, nil)
 	q := req.URL.Query()
 	q.Add("api_key", getApiKey())
 	q.Add("query", keyword)
+	q.Add("page", page)
 	req.URL.RawQuery = q.Encode()
 	resBody := ExecuteRequest(req)
 	contents := tmdb.Base{}
