@@ -6,7 +6,8 @@ ENV GO111MODULE="on"
 
 WORKDIR /var/app/movie
 
-RUN apk add --no-cache \
+RUN apk update \
+    add --no-cache \ 
         alpine-sdk \
         git && \
         go get github.com/pilu/fresh
